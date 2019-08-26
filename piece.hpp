@@ -17,6 +17,7 @@ enum class Team {
 class Piece {
 public:
     Piece(Team team);
+    virtual ~Piece() = default;
     Team team() const;
 
     virtual std::vector<Point> moves(Point origin, Board const& board) const = 0;
