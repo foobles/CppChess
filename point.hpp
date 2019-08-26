@@ -11,4 +11,12 @@ struct Point {
     int idx(int width) const {
         return x + y * width;
     }
+
+    Point operator+(Point rhs) const {
+        return { x + rhs.x, y + rhs.y };
+    }
+
+    Point operator*(int scale) const {
+        return { x * scale, y * scale };
+    }
 };
