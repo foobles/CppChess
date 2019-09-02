@@ -16,11 +16,49 @@ enum class Team {
 
 class Piece {
 public:
-    Piece(Team team);
+    explicit Piece(Team team);
     virtual ~Piece() = default;
     Team team() const;
-
     virtual std::vector<Point> moves(Point origin, Board const& board) const = 0;
 private:
     Team team_;
 };
+
+std::vector<Point> adjacents();
+std::vector<Point> diagonals();
+std::vector<Point> neighbors();
+
+std::vector<Point> make_extended_points(Point origin, Team team, Board const& board, std::vector<Point> const& dirs);
+std::vector<Point> make_offset_points(Point origin, Team team, Board const& board, std::vector<Point> const& offsets);
+
+namespace Pieces {
+    class Pawn : public Piece{
+        explicit Pawn(Team team);
+        std::vector<Point> moves(Point origin, Board const& board) const override;
+    };
+
+    class King : public Piece{
+        explicit King(Team team);
+        std::vector<Point> moves(Point origin, Board const& board) const override;
+    };
+
+    class Queen : public Piece{
+        explicit Queen(Team team);
+        std::vector<Point> moves(Point origin, Board const& board) const override;
+    };
+
+    class Bishop : public Piece{
+        explicit Bishop(Team team);
+        std::vector<Point> moves(Point origin, Board const& board) const override;
+    };
+
+    class Knight : public Piece{
+        explicit Knight(Team team);
+        std::vector<Point> moves(Point origin, Board const& board) const override;
+    };
+
+    class Rook : public Piece{
+        explicit Rook(Team team);
+        std::vector<Point> moves(Point origin, Board const& board) const override;
+    };
+}
