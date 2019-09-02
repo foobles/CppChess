@@ -17,6 +17,14 @@ Board::Board(int width, int height) :
 
 Board::~Board() = default;
 
+int Board::width() const {
+    return width_;
+}
+
+int Board::height() const {
+    return height_;
+}
+
 Board::PiecePtr const& Board::operator[](Point point) const {
     return data_[point.idx(width_)];
 }

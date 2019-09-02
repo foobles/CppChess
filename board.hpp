@@ -12,12 +12,16 @@
 class Piece;
 
 class Board {
-    using PiecePtr = std::unique_ptr<Piece>;
 public:
+    using PiecePtr = std::unique_ptr<Piece>;
+
     Board(int width, int height);
     ~Board();
 
     Board(Board const&) = delete;
+
+    int width() const;
+    int height() const;
 
     PiecePtr const& operator[](Point point) const;
     PiecePtr& operator[](Point point);
