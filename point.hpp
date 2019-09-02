@@ -11,12 +11,22 @@ struct Point {
     int idx(int width) const {
         return x + y * width;
     }
-
-    Point operator+(Point rhs) const {
-        return { x + rhs.x, y + rhs.y };
-    }
-
-    Point operator*(int scale) const {
-        return { x * scale, y * scale };
-    }
 };
+
+inline Point operator+(Point lhs, Point rhs) {
+    return { lhs.x + rhs.x, lhs.y + rhs.y };
+}
+
+inline Point& operator+=(Point& lhs, Point rhs) {
+    lhs = lhs + rhs;
+    return lhs;
+}
+
+inline Point operator*(Point p, int scale) {
+    return { p.x * scale, p.y * scale };
+}
+
+inline Point& operator*=(Point& p, int scale) {
+    p = p * scale;
+    return p;
+}
