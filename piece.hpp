@@ -33,32 +33,38 @@ std::vector<Point> make_offset_points(Point origin, Team team, Board const& boar
 
 namespace Pieces {
     class Pawn : public Piece{
-        explicit Pawn(Team team);
+    public:
+        using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 
     class King : public Piece{
-        explicit King(Team team);
+    public:
+        using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 
     class Queen : public Piece{
-        explicit Queen(Team team);
+    public:
+        using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 
     class Bishop : public Piece{
-        explicit Bishop(Team team);
+    public:
+        using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 
     class Knight : public Piece{
-        explicit Knight(Team team);
+    public:
+        using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 
-    class Rook : public Piece{
-        explicit Rook(Team team);
+    class Rook : public Piece
+    public:
+        using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 }

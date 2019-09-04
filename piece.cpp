@@ -68,11 +68,6 @@ std::vector<Point> make_offset_points(Point origin, Team team, Board const& boar
 
 using namespace Pieces;
 
-Pawn::Pawn(Team team) :
-    Piece(team)
-{}
-
-
 static int team_pawn_row(Team team) {
     switch (team) {
         case Team::Black:
@@ -108,33 +103,17 @@ std::vector<Point> Pawn::moves(Point origin, Board const &board) const {
     return offsets;
 }
 
-King::King(Team team) :
-    Piece(team)
-{}
-
 std::vector<Point> King::moves(Point origin, Board const &board) const {
     return make_offset_points(origin, team(), board, neighbors());
 }
-
-Queen::Queen(Team team) :
-    Piece(team)
-{}
 
 std::vector<Point> Queen::moves(Point origin, Board const &board) const {
     return make_extended_points(origin, team(), board, neighbors());
 }
 
-Bishop::Bishop(Team team) :
-    Piece(team)
-{}
-
 std::vector<Point> Bishop::moves(Point origin, Board const &board) const {
     return make_extended_points(origin, team(), board, diagonals());
 }
-
-Knight::Knight(Team team) :
-    Piece(team)
-{}
 
 std::vector<Point> Knight::moves(Point origin, Board const &board) const {
     return make_offset_points(origin, team(), board, {
@@ -148,10 +127,6 @@ std::vector<Point> Knight::moves(Point origin, Board const &board) const {
             {-1, -2}
     });
 }
-
-Rook::Rook(Team team) :
-    Piece(team)
-{}
 
 std::vector<Point> Rook::moves(Point origin, Board const &board) const {
     return make_extended_points(origin, team(), board, adjacents());
