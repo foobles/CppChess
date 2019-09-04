@@ -62,7 +62,7 @@ namespace Pieces {
         std::vector<Point> moves(Point origin, Board const& board) const override;
     };
 
-    class Rook : public Piece
+    class Rook : public Piece {
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
