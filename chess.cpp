@@ -1,3 +1,4 @@
+#include "chess.hpp"
 //
 // Created by April on 9/3/2019.
 //
@@ -7,6 +8,14 @@
 
 #include "chess.hpp"
 
+RuleException::RuleException(RuleException::Type type, std::string&& message):
+    std::runtime_error{message},
+    type_{type}
+{}
+
+RuleException::Type RuleException::type() const {
+    return type_;
+}
 
 Chess::Chess() :
     board_{8, 8},

@@ -29,11 +29,6 @@ public:
     PiecePtr move_piece(Point from, Point onto);
 
     bool in_bounds(Point p) const;
-
-    enum class RuleException {
-        ILLEGAL_MOVE,
-
-    };
 private:
     int width_;
     int height_;
