@@ -5,11 +5,12 @@
 
 #include <vector>
 #include <algorithm>
+#include <utility>
 
 #include "chess.hpp"
 
-RuleException::RuleException(RuleException::Type type, std::string&& message):
-    std::runtime_error{message},
+RuleException::RuleException(RuleException::Type type):
+    std::runtime_error{"Chess Rule Exception"},
     type_{type}
 {}
 
@@ -22,17 +23,16 @@ Chess::Chess() :
     cur_team_{Team::White}
 {}
 
-bool Chess::make_move(Point from, Point onto) {
-    if (!board_[from]) {
-        return false;
+std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
+    if (!board_.in_bounds(from) || !board_[from]) {
+        throw RuleException(RuleException::Type::NO_PIECE);
     }
-    Piece& cur = *board_[from];
-    std::vector<Point> moves = cur.moves(from, board_);
-    if (cur.team() != cur_team_ ||
-        std::find(moves.begin(), moves.end(), onto) == moves.end()
-    ) {
-        return false;
+    std::vector<Point> allowed_points = board_[from]->moves(from, board_);
+    if (std::find(allowed_points.begin(), allowed_points.end(), onto) != allowed_points.end()) {
+        std::unique_ptr<Piece> ret = std::move(board_[onto]);
+        board_[onto] = std::move(board_[from]);
+        return ret;
+    } else {
+        throw RuleException(RuleException::Type::ILLEGAL_MOVE);
     }
-    board_.move_piece(from, onto);
-
 }

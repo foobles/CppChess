@@ -18,7 +18,7 @@ public:
         ILLEGAL_MOVE
     };
 
-    explicit RuleException(Type type, std::string&& message = "Cannot make move");
+    explicit RuleException(Type type);
 
     Type type() const;
 
@@ -30,7 +30,9 @@ class Chess {
 public:
     Chess();
 
-    bool make_move(Point from, Point onto);
+    std::unique_ptr<Piece> make_move(Point from, Point onto);
+
+
 
 private:
     Board board_;
