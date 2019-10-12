@@ -9,6 +9,8 @@
 
 #include "chess.hpp"
 
+using namespace chess;
+
 RuleException::RuleException(RuleException::Type type):
     std::runtime_error{"Chess Rule Exception"},
     type_{type}

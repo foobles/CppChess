@@ -11,34 +11,32 @@
 #include "board.hpp"
 #include "piece.hpp"
 
-class RuleException : public std::runtime_error {
-public:
-    enum class Type {
-        NO_PIECE,
-        ILLEGAL_MOVE
+namespace chess {
+    class RuleException : public std::runtime_error {
+    public:
+        enum class Type {
+            NO_PIECE,
+            ILLEGAL_MOVE
+        };
+
+        explicit RuleException(Type type);
+
+        Type type() const;
+
+    private:
+        Type type_;
     };
 
-    explicit RuleException(Type type);
+    class Chess {
+    public:
+        Chess();
 
-    Type type() const;
+        std::unique_ptr<Piece> make_move(Point from, Point onto);
 
-private:
-    Type type_;
-};
+    private:
+        Board board_;
+        Team cur_team_;
+    };
+}
 
-class Chess {
-public:
-    Chess();
-
-    std::unique_ptr<Piece> make_move(Point from, Point onto);
-
-
-
-private:
-    Board board_;
-    Team cur_team_;
-};
-
-
-
-
+using chess::Chess;
