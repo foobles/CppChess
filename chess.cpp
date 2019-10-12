@@ -24,7 +24,7 @@ Chess::Chess() :
 {}
 
 std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
-    if (!board_.in_bounds(from) || !board_[from]) {
+    if (!board_.in_bounds(from) || !board_[from] || board_[from]->team() != cur_team_) {
         throw RuleException(RuleException::Type::NO_PIECE);
     }
     std::vector<Point> allowed_points = board_[from]->moves(from, board_);
