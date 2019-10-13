@@ -27,6 +27,20 @@ namespace chess {
         Type type_;
     };
 
+    namespace input {
+        struct Input {
+            virtual ~Input() = default;
+        };
+
+        struct Pass : public Input {};
+        struct Move : public Input {
+            Point from;
+            Point onto;
+        };
+    }
+
+    using input::Input;
+
     class Chess {
     public:
         Chess();
