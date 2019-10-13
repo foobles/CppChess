@@ -15,9 +15,9 @@ namespace chess {
     class RuleException : public std::runtime_error {
     public:
         enum class Type {
-            NO_PIECE,
-            ILLEGAL_MOVE,
-            WRONG_TEAM
+            NoPiece,
+            IllegalMove,
+            WrongTeam
         };
 
         explicit RuleException(Type type);

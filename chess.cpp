@@ -27,7 +27,7 @@ Chess::Chess() :
 
 std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
     if (!board_.in_bounds(from) || !board_[from] || board_[from]->team() != cur_team_) {
-        throw RuleException(RuleException::Type::NO_PIECE);
+        throw RuleException(RuleException::Type::NoPiece);
     }
     std::vector<Point> allowed_points = board_[from]->moves(from, board_);
     if (std::find(allowed_points.begin(), allowed_points.end(), onto) != allowed_points.end()) {
@@ -35,7 +35,7 @@ std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
         board_[onto] = std::move(board_[from]);
         return ret;
     } else {
-        throw RuleException(RuleException::Type::ILLEGAL_MOVE);
+        throw RuleException(RuleException::Type::IllegalMove);
     }
 }
 
@@ -52,7 +52,7 @@ void Chess::change_team() {
 
 void Chess::handle_input(chess::Input const& input) {
     if (input.team != cur_team_) {
-        throw RuleException(RuleException::Type::WRONG_TEAM);
+        throw RuleException(RuleException::Type::WrongTeam);
     }
     if (dynamic_cast<input::Pass const*>(&input)) {
         change_team();
