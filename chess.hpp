@@ -16,7 +16,8 @@ namespace chess {
     public:
         enum class Type {
             NO_PIECE,
-            ILLEGAL_MOVE
+            ILLEGAL_MOVE,
+            WRONG_TEAM
         };
 
         explicit RuleException(Type type);
@@ -30,6 +31,7 @@ namespace chess {
     namespace input {
         struct Input {
             virtual ~Input() = default;
+            Team team;
         };
 
         struct Pass : public Input {};
@@ -47,6 +49,9 @@ namespace chess {
 
         std::unique_ptr<Piece> make_move(Point from, Point onto);
 
+        void change_team();
+
+        void handle_input(Input const& input);
     private:
         Board board_;
         Team cur_team_;

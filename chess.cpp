@@ -38,3 +38,26 @@ std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
         throw RuleException(RuleException::Type::ILLEGAL_MOVE);
     }
 }
+
+void Chess::change_team() {
+    switch (cur_team_) {
+    case Team::Black:
+        cur_team_ = Team::White;
+        break;
+    case Team::White:
+        cur_team_ = Team::Black;
+        break;
+    }
+}
+
+void Chess::handle_input(chess::Input const& input) {
+    if (input.team != cur_team_) {
+        throw RuleException(RuleException::Type::WRONG_TEAM);
+    }
+    if (dynamic_cast<input::Pass const*>(&input)) {
+        change_team();
+    } else if (auto* move = dynamic_cast<input::Move const*>(&input); move) {
+        make_move(move->from, move->onto);
+        change_team();
+    }
+}
