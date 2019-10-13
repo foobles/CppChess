@@ -31,11 +31,20 @@ namespace chess {
     namespace input {
         struct Input {
             virtual ~Input() = default;
+            inline explicit Input(Team team): team(team) {}
             Team team;
         };
 
-        struct Pass : public Input {};
+        struct Pass : public Input {
+            inline explicit Pass(Team team) : Input(team) {}
+        };
         struct Move : public Input {
+            inline Move(Team team, Point from, Point onto):
+                Input(team),
+                from(from),
+                onto(onto)
+            {}
+
             Point from;
             Point onto;
         };
