@@ -3,4 +3,4 @@ project(Chess)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Chess main.cpp piece.hpp point.hpp piece.cpp board.cpp board.hpp chess.cpp chess.hpp)
+add_executable(Chess src/main.cpp src/piece.hpp src/point.hpp src/piece.cpp src/board.cpp src/board.hpp src/chess.cpp src/chess.hpp)
