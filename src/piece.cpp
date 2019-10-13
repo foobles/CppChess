@@ -75,6 +75,7 @@ static int team_pawn_row(Team team) {
         case Team::White:
             return 6;
     }
+    return -1;
 }
 
 static Point team_dir(Team team) {
@@ -84,6 +85,7 @@ static Point team_dir(Team team) {
         case Team::White:
             return {0, -1};
     }
+    return {-1, -1};
 }
 
 std::vector<Point> Pawn::moves(Point origin, Board const &board) const {
