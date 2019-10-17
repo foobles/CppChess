@@ -23,7 +23,7 @@ Point string_to_point(std::string const& str) {
     };
 }
 
-std::unique_ptr<chess::Input> get_input(Team cur_team) {
+std::unique_ptr<chess::Action> get_input(Team cur_team) {
     std::string str;
     while (str.empty()) {
         std::getline(std::cin, str);
@@ -32,18 +32,28 @@ std::unique_ptr<chess::Input> get_input(Team cur_team) {
     std::regex rg_move(R"(^\s*([A-Ha-h][1-8])\s+to\s+([A-Ha-h][1-8])\s*$)");
     std::regex rg_pass(R"(^\s*pass\s*$)");
     if (std::regex_search(str, sm, rg_move)) {
-        return std::make_unique<chess::input::Move>(
+        return std::make_unique<chess::action::Move>(
                 cur_team,
                 string_to_point(sm[1].str()),
                 string_to_point(sm[2].str()));
     } else if (std::regex_match(str, rg_pass)) {
-        return std::make_unique<chess::input::Pass>(cur_team);
+        return std::make_unique<chess::action::Pass>(cur_team);
     } else {
         throw ParseInputError();
     }
 }
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Chess chess_game;
+
+    while (true) {
+        try {
+            auto input = get_input(chess_game.);
+
+        } catch (ParseInputError const& e) {
+            std::cout << "Error caught! pwewh!\n";
+        }
+    }
+
     return 0;
 }

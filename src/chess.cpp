@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "chess.hpp"
+#include "piece.hpp"
 
 using namespace chess;
 
@@ -18,6 +19,14 @@ RuleException::RuleException(RuleException::Type type):
 
 RuleException::Type RuleException::type() const {
     return type_;
+}
+
+Action::Action(Team team):
+    team_(team)
+{}
+
+Team Action::team() const {
+    return team_;
 }
 
 Chess::Chess() :
@@ -50,14 +59,11 @@ void Chess::change_team() {
     }
 }
 
-void Chess::handle_input(chess::Input const& input) {
-    if (input.team != cur_team_) {
-        throw RuleException(RuleException::Type::WrongTeam);
-    }
-    if (dynamic_cast<input::Pass const*>(&input)) {
-        change_team();
-    } else if (auto* move = dynamic_cast<input::Move const*>(&input); move) {
-        make_move(move->from, move->onto);
-        change_team();
-    }
+void action::Pass::handle(Chess& chess) const {
+    chess.change_team();
+}
+
+void action::Move::handle(Chess &chess) const {
+    chess.make_move(from_, onto_);
+    chess.change_team();
 }

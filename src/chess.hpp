@@ -28,29 +28,36 @@ namespace chess {
         Type type_;
     };
 
-    namespace input {
-        struct Input {
-            virtual ~Input() = default;
-            inline explicit Input(Team team): team(team) {}
-            Team team;
+    class Chess;
+
+    namespace action {
+        class Action {
+        public:
+            explicit Action(Team team);
+            virtual ~Action() = default;
+            virtual void handle(Chess&) const = 0;
+            Team team() const;
+        private:
+            Team team_;
         };
 
-        struct Pass : public Input {
-            inline explicit Pass(Team team) : Input(team) {}
+        class Pass : public Action {
+        public:
+            using Action::Action;
+            void handle(Chess& chess) const override;
         };
-        struct Move : public Input {
-            inline Move(Team team, Point from, Point onto):
-                Input(team),
-                from(from),
-                onto(onto)
-            {}
 
-            Point from;
-            Point onto;
+        class Move : public Action {
+        public:
+            Move(Team team, Point from, Point onto);
+            void handle(Chess& chess) const override;
+        private:
+            Point from_;
+            Point onto_;
         };
     }
 
-    using input::Input;
+    using action::Action;
 
     class Chess {
     public:
@@ -59,8 +66,6 @@ namespace chess {
         std::unique_ptr<Piece> make_move(Point from, Point onto);
 
         void change_team();
-
-        void handle_input(Input const& input);
     private:
         Board board_;
         Team cur_team_;
