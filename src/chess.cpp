@@ -63,7 +63,14 @@ void action::Pass::handle(Chess& chess) const {
     chess.change_team();
 }
 
+action::Move::Move(Team team, Point from, Point onto):
+    Action(team),
+    from_(from),
+    onto_(onto)
+{}
+
 void action::Move::handle(Chess &chess) const {
     chess.make_move(from_, onto_);
     chess.change_team();
 }
+
