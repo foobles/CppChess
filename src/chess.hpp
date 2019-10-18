@@ -66,6 +66,8 @@ namespace chess {
         std::unique_ptr<Piece> make_move(Point from, Point onto);
 
         void change_team();
+
+        Team cur_team() const;
     private:
         Board board_;
         Team cur_team_;

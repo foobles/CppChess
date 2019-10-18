@@ -59,6 +59,10 @@ void Chess::change_team() {
     }
 }
 
+Team Chess::cur_team() const {
+    return cur_team_;
+}
+
 void action::Pass::handle(Chess& chess) const {
     chess.change_team();
 }
