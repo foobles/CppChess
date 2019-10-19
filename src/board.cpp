@@ -48,6 +48,7 @@ bool Board::in_bounds(Point p) const {
 }
 
 static void draw_row_separator(int spaces) {
+    std::cout << "  ";
     for (int i = 0; i < spaces; ++i) {
         std::cout << "+--";
     }
@@ -65,13 +66,13 @@ void Board::draw(Team team) const {
         std::cout << '\n';
 
         for (int y = 0; y < height_; ++y) {
-            std::cout << (height_ - y + 'A') << ' ';
+            draw_row_separator(width_);
+            std::cout << (static_cast<char>(height_ - y + 'A' - 1)) << ' ';
             for (int x = 0; x < width_; ++x) {
                 PiecePtr const& cur_piece = (*this)[{x, y}];
                 std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
             }
             std::cout << "|\n";
-            draw_row_separator(width_);
         }
         draw_row_separator(width_);
         break;
@@ -83,13 +84,13 @@ void Board::draw(Team team) const {
             std::cout << '\n';
 
             for (int y = height_ - 1; y >= 0; --y) {
-                std::cout << (height_ - y + 'A') << ' ';
+                draw_row_separator(width_);
+                std::cout << (static_cast<char>(height_ - y + 'A' - 1)) << ' ';
                 for (int x = width_ - 1; x >= 0; --x) {
                     PiecePtr const& cur_piece = (*this)[{x, y}];
                     std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
                 }
                 std::cout << "|\n";
-                draw_row_separator(width_);
             }
             draw_row_separator(width_);
             break;
