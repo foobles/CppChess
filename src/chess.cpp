@@ -32,7 +32,30 @@ Team Action::team() const {
 Chess::Chess() :
     board_{8, 8},
     cur_team_{Team::White}
-{}
+{
+    for (int i = 0; i < board_.width(); i++) {
+        board_[{i, 1}] = std::make_unique<Pieces::Pawn>(Team::Black);
+        board_[{i, 6}] = std::make_unique<Pieces::Pawn>(Team::White);
+    }
+
+    board_[{0, 0}] = std::make_unique<Pieces::Rook>(Team::Black);
+    board_[{1, 0}] = std::make_unique<Pieces::Knight>(Team::Black);
+    board_[{2, 0}] = std::make_unique<Pieces::Bishop>(Team::Black);
+    board_[{3, 0}] = std::make_unique<Pieces::King>(Team::Black);
+    board_[{4, 0}] = std::make_unique<Pieces::Queen>(Team::Black);
+    board_[{5, 0}] = std::make_unique<Pieces::Bishop>(Team::Black);
+    board_[{6, 0}] = std::make_unique<Pieces::Knight>(Team::Black);
+    board_[{7, 0}] = std::make_unique<Pieces::Rook>(Team::Black);
+
+    board_[{0, 7}] = std::make_unique<Pieces::Rook>(Team::White);
+    board_[{1, 7}] = std::make_unique<Pieces::Knight>(Team::White);
+    board_[{2, 7}] = std::make_unique<Pieces::Bishop>(Team::White);
+    board_[{3, 7}] = std::make_unique<Pieces::King>(Team::White);
+    board_[{4, 7}] = std::make_unique<Pieces::Queen>(Team::White);
+    board_[{5, 7}] = std::make_unique<Pieces::Bishop>(Team::White);
+    board_[{6, 7}] = std::make_unique<Pieces::Knight>(Team::White);
+    board_[{7, 7}] = std::make_unique<Pieces::Rook>(Team::White);
+}
 
 std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
     if (!board_.in_bounds(from) || !board_[from] || board_[from]->team() != cur_team_) {
