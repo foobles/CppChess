@@ -48,7 +48,7 @@ int main() {
 
     while (true) {
         try {
-            auto input = get_input(chess_game.);
+            //auto input = get_input(chess_game.);
 
         } catch (ParseInputError const& e) {
             std::cout << "Error caught! pwewh!\n";

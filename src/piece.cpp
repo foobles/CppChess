@@ -2,6 +2,7 @@
 // Created by April on 8/25/2019.
 //
 
+#include <cctype>
 #include "piece.hpp"
 #include "board.hpp"
 
@@ -12,6 +13,15 @@ Team Piece::team() const {
     return team_;
 }
 
+char Piece::symbol() const {
+    switch (team_) {
+        case Team::Black:
+            return std::toupper(letter());
+        case Team::White:
+            return std::tolower(letter());
+    }
+    return -1;
+}
 
 std::vector<Point> adjacents() {
     return {{0,  -1},
@@ -105,16 +115,32 @@ std::vector<Point> Pawn::moves(Point origin, Board const &board) const {
     return offsets;
 }
 
+char Pawn::letter() const {
+    return 'p';
+}
+
 std::vector<Point> King::moves(Point origin, Board const &board) const {
     return make_offset_points(origin, team(), board, neighbors());
+}
+
+char King::letter() const {
+    return 'k';
 }
 
 std::vector<Point> Queen::moves(Point origin, Board const &board) const {
     return make_extended_points(origin, team(), board, neighbors());
 }
 
+char Queen::letter() const {
+    return 'q';
+}
+
 std::vector<Point> Bishop::moves(Point origin, Board const &board) const {
     return make_extended_points(origin, team(), board, diagonals());
+}
+
+char Bishop::letter() const {
+    return 'b';
 }
 
 std::vector<Point> Knight::moves(Point origin, Board const &board) const {
@@ -130,6 +156,14 @@ std::vector<Point> Knight::moves(Point origin, Board const &board) const {
     });
 }
 
+char Knight::letter() const {
+    return 'n';
+}
+
 std::vector<Point> Rook::moves(Point origin, Board const &board) const {
     return make_extended_points(origin, team(), board, adjacents());
+}
+
+char Rook::letter() const {
+    return 'r';
 }

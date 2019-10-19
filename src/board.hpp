@@ -8,8 +8,7 @@
 #include <vector>
 
 #include "point.hpp"
-
-class Piece;
+#include "piece.hpp"
 
 class Board {
 public:
@@ -29,7 +28,10 @@ public:
     PiecePtr move_piece(Point from, Point onto);
 
     bool in_bounds(Point p) const;
+
+    void draw(Team team) const;
 private:
+
     int width_;
     int height_;
     std::vector<PiecePtr> data_;

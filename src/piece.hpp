@@ -20,6 +20,10 @@ public:
     virtual ~Piece() = default;
     Team team() const;
     virtual std::vector<Point> moves(Point origin, Board const& board) const = 0;
+    char symbol() const;
+
+protected:
+    virtual char letter() const = 0;
 private:
     Team team_;
 };
@@ -36,35 +40,47 @@ namespace Pieces {
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
+    protected:
+        char letter() const override;
     };
 
     class King : public Piece{
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
+    protected:
+        char letter() const override;
     };
 
     class Queen : public Piece{
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
+    protected:
+        char letter() const override;
     };
 
     class Bishop : public Piece{
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
+    protected:
+        char letter() const override;
     };
 
     class Knight : public Piece{
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
+    protected:
+        char letter() const override;
     };
 
     class Rook : public Piece {
     public:
         using Piece::Piece;
         std::vector<Point> moves(Point origin, Board const& board) const override;
+    protected:
+        char letter() const override;
     };
 }

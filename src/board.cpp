@@ -4,10 +4,9 @@
 
 #include <cassert>
 #include <utility>
+#include <iostream>
 
 #include "board.hpp"
-#include "piece.hpp"
-
 
 Board::Board(int width, int height) :
     width_(width),
@@ -48,3 +47,51 @@ bool Board::in_bounds(Point p) const {
         && p.y < height_;
 }
 
+static void draw_row_separator(int spaces) {
+    for (int i = 0; i < spaces; ++i) {
+        std::cout << "+--";
+    }
+    std::cout << "+\n";
+}
+
+
+void Board::draw(Team team) const {
+    switch (team) {
+    case Team::White:
+        std::cout << "    ";
+        for (int i = 1; i <= width_; ++i) {
+            std::cout << i << "  ";
+        }
+        std::cout << '\n';
+
+        for (int y = 0; y < height_; ++y) {
+            std::cout << (height_ - y + 'A') << ' ';
+            for (int x = 0; x < width_; ++x) {
+                PiecePtr const& cur_piece = (*this)[{x, y}];
+                std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
+            }
+            std::cout << "|\n";
+            draw_row_separator(width_);
+        }
+        draw_row_separator(width_);
+        break;
+    case Team::Black:
+            std::cout << "    ";
+            for (int i = width_; i >= 1; --i) {
+                std::cout << i << "  ";
+            }
+            std::cout << '\n';
+
+            for (int y = height_ - 1; y >= 0; --y) {
+                std::cout << (height_ - y + 'A') << ' ';
+                for (int x = width_ - 1; x >= 0; --x) {
+                    PiecePtr const& cur_piece = (*this)[{x, y}];
+                    std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
+                }
+                std::cout << "|\n";
+                draw_row_separator(width_);
+            }
+            draw_row_separator(width_);
+            break;
+    }
+}
