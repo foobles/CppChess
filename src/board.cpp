@@ -60,17 +60,18 @@ void Board::draw(Team team) const {
     switch (team) {
     case Team::White:
         std::cout << "    ";
-        for (int i = 1; i <= width_; ++i) {
-            std::cout << i << "  ";
+        for (int i = 0; i < width_; ++i) {
+            std::cout << static_cast<char>(i + 'A') << "  ";
         }
         std::cout << '\n';
 
         for (int y = 0; y < height_; ++y) {
             draw_row_separator(width_);
-            std::cout << (static_cast<char>(height_ - y + 'A' - 1)) << ' ';
+            std::cout << (height_ - y) << ' ';
             for (int x = 0; x < width_; ++x) {
                 PiecePtr const& cur_piece = (*this)[{x, y}];
                 std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
+                //std::cout << '|' << x << y;
             }
             std::cout << "|\n";
         }
@@ -78,17 +79,18 @@ void Board::draw(Team team) const {
         break;
     case Team::Black:
             std::cout << "    ";
-            for (int i = width_; i >= 1; --i) {
-                std::cout << i << "  ";
+            for (int i = width_ - 1; i >= 0; --i) {
+                std::cout << static_cast<char>(i + 'A') << "  ";
             }
             std::cout << '\n';
 
             for (int y = height_ - 1; y >= 0; --y) {
                 draw_row_separator(width_);
-                std::cout << (static_cast<char>(height_ - y + 'A' - 1)) << ' ';
+                std::cout << (height_ - y) << ' ';
                 for (int x = width_ - 1; x >= 0; --x) {
                     PiecePtr const& cur_piece = (*this)[{x, y}];
                     std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
+                    //std::cout << '|' << x << y;
                 }
                 std::cout << "|\n";
             }
