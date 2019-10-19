@@ -47,11 +47,24 @@ int main() {
     Chess chess_game;
 
     while (true) {
+        chess_game.board().draw(chess_game.cur_team());
         try {
-            //auto input = get_input(chess_game.);
-
+            get_input(chess_game.cur_team())->handle(chess_game);
+            if (([]{return false;})()) break;
         } catch (ParseInputError const& e) {
-            std::cout << "Error caught! pwewh!\n";
+            std::cout << "Bad input.\n";
+        } catch (chess::RuleException const& e) {
+            switch (e.type()) {
+            case chess::RuleException::Type::IllegalMove:
+                std::cout << "You aren't allowed to move that there.\n";
+                break;
+            case chess::RuleException::Type::NoPiece:
+                std::cout << "There is no piece there.\n";
+                break;
+            case chess::RuleException::Type::WrongTeam:
+                std::cout << "You can only move your own pieces.\n";
+                break;
+            }
         }
     }
 

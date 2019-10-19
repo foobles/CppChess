@@ -78,3 +78,10 @@ void action::Move::handle(Chess &chess) const {
     chess.change_team();
 }
 
+Board& Chess::board() {
+    return board_;
+}
+
+Board const& Chess::board() const {
+    return board_;
+}

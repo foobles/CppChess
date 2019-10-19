@@ -68,6 +68,9 @@ namespace chess {
         void change_team();
 
         Team cur_team() const;
+
+        Board const& board() const;
+        Board& board();
     private:
         Board board_;
         Team cur_team_;
