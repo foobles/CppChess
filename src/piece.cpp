@@ -24,16 +24,16 @@ char Piece::symbol() const {
 }
 
 std::vector<Point> adjacents() {
-    return {{0,  -1},
-            {1,  0},
-            {0,  1},
-            {-1, 0}};
+    return {{ 0, -1},
+            { 1,  0},
+            { 0,  1},
+            {-1,  0}};
 }
 
 std::vector<Point> diagonals() {
-    return {{1,  1},
-            {1,  -1},
-            {-1, 1},
+    return {{ 1,  1},
+            { 1, -1},
+            {-1,  1},
             {-1, -1}};
 }
 
@@ -57,6 +57,7 @@ std::vector<Point> make_extended_points(Point origin, Team team, Board const& bo
                 break;
             }
             ret.push_back(cur);
+            cur += offset;
         }
     }
     return ret;
@@ -100,8 +101,11 @@ static Point team_dir(Team team) {
 
 std::vector<Point> Pawn::moves(Point origin, Board const &board) const {
     Point forward = team_dir(team());
-    std::vector<Point> offsets = {forward};
-    if (origin.y == team_pawn_row(team())) {
+    std::vector<Point> offsets = {};
+    if (!board[origin + forward]) {
+        offsets.push_back(forward);
+    }
+    if (origin.y == team_pawn_row(team()) && !board[origin + forward * 2]) {
         offsets.push_back(forward * 2);
     }
     Point diag_left = forward + Point{-1, 0};
@@ -112,7 +116,7 @@ std::vector<Point> Pawn::moves(Point origin, Board const &board) const {
     if (board.in_bounds(origin + diag_right) && board[origin + diag_right]) {
         offsets.push_back(diag_right);
     }
-    return offsets;
+    return make_offset_points(origin, team(), board, offsets);
 }
 
 char Pawn::letter() const {
