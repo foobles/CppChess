@@ -40,6 +40,8 @@ public:
     ConstIterator begin() const;
     ConstIterator end() const;
 
+    std::vector<Point> points() const;
+
 private:
 
     int width_;

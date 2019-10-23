@@ -114,3 +114,14 @@ Board::Iterator Board::end() {
 Board::ConstIterator Board::end() const {
     return data_.end();
 }
+
+std::vector<Point> Board::points() const {
+    std::vector<Point> ret;
+    ret.reserve(width_ * height_);
+    for (int y = 0; y < height_; ++y) {
+        for (int x = 0; x < width_; ++x) {
+            ret.push_back({x, y});
+        }
+    }
+    return ret;
+}
