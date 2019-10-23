@@ -30,6 +30,16 @@ public:
     bool in_bounds(Point p) const;
 
     void draw(Team team) const;
+
+    using Iterator = std::vector<PiecePtr>::iterator;
+    using ConstIterator = std::vector<PiecePtr>::const_iterator;
+
+    Iterator begin();
+    Iterator end();
+
+    ConstIterator begin() const;
+    ConstIterator end() const;
+
 private:
 
     int width_;

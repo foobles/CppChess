@@ -98,3 +98,19 @@ void Board::draw(Team team) const {
             break;
     }
 }
+
+Board::Iterator Board::begin() {
+    return data_.begin();
+}
+
+Board::ConstIterator Board::begin() const {
+    return data_.begin();
+}
+
+Board::Iterator Board::end() {
+    return data_.end();
+}
+
+Board::ConstIterator Board::end() const {
+    return data_.end();
+}
