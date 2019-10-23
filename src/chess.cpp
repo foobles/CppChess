@@ -72,14 +72,7 @@ std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
 }
 
 void Chess::change_team() {
-    switch (cur_team_) {
-    case Team::Black:
-        cur_team_ = Team::White;
-        break;
-    case Team::White:
-        cur_team_ = Team::Black;
-        break;
-    }
+    cur_team_ = opposite_team(cur_team_);
 }
 
 Team Chess::cur_team() const {

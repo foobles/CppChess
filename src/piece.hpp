@@ -14,6 +14,8 @@ enum class Team {
     Black
 };
 
+Team opposite_team(Team team);
+
 class Piece {
 public:
     explicit Piece(Team team);

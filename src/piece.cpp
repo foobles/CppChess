@@ -6,6 +6,16 @@
 #include "piece.hpp"
 #include "board.hpp"
 
+Team opposite_team(Team team) {
+    switch (team) {
+    case Team::Black:
+        return Team::White;
+    case Team::White:
+        return Team::Black;
+    }
+    return static_cast<Team>(-1);
+}
+
 Piece::Piece(Team team)
         : team_(team) {}
 
