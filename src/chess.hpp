@@ -71,11 +71,13 @@ namespace chess {
 
         Board const& board() const;
         Board& board();
+
+        bool is_in_check(Team team) const;
     private:
         template <typename F>
         void with_simulated_move(Point from, Point onto, F func) {
             std::unique_ptr<Piece> taken = make_move(from, onto);
-            func(*this);
+            func(const_cast<Chess const&>(*this));
             board_.move_piece(onto, from);
             board_[onto] = std::move(taken);
         }

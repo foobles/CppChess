@@ -101,3 +101,20 @@ Board& Chess::board() {
 Board const& Chess::board() const {
     return board_;
 }
+
+bool Chess::is_in_check(Team team) const {
+    for (Point p : board_.points()) {
+        if (board_[p] && board_[p]->team() == opposite_team(team)) {
+            for (Point move : board_[p]->moves(p, board_)) {
+                std::unique_ptr<Piece> const& move_piece = board_[move];
+                if (move_piece &&
+                        dynamic_cast<Pieces::King const*>(move_piece.get()) &&
+                        move_piece->team() == team)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
