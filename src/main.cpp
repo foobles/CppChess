@@ -48,15 +48,33 @@ std::unique_ptr<chess::Action> get_input(Team cur_team, Chess* ch = nullptr) {
 
 }
 
+std::string team_as_string(Team t) {
+    switch (t) {
+    case Team::White:
+        return "White";
+    case Team::Black:
+        return "Black";
+    }
+    return "";
+}
+
 int main() {
     Chess chess_game;
 
 
     while (true) {
         chess_game.board().draw(chess_game.cur_team());
+        std::string cur_team_str = team_as_string(chess_game.cur_team());
+        if (chess_game.is_in_check(chess_game.cur_team())) {
+            if (chess_game.is_in_checkmate(chess_game.cur_team())) {
+                std::cout << cur_team_str << "is in checkmate. Game Over!\n";
+                break;
+            }
+            std::cout << cur_team_str << " is in check.\n";
+        }
+        std::cout << "It is " << cur_team_str << "'s turn.\n";
         try {
             get_input(chess_game.cur_team(), &chess_game)->handle(chess_game);
-            if (([]{return false;})()) break;
         } catch (ParseInputError const& e) {
             std::cout << "Bad input.\n";
         } catch (chess::RuleException const& e) {
@@ -72,6 +90,7 @@ int main() {
                 break;
             }
         }
+
     }
 
     return 0;
