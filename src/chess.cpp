@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <unordered_set>
 
 #include "chess.hpp"
 #include "piece.hpp"
@@ -104,17 +105,45 @@ Board const& Chess::board() const {
 
 bool Chess::is_in_check(Team team) const {
     for (Point p : board_.points()) {
-        if (board_[p] && board_[p]->team() == opposite_team(team)) {
+        if (board_[p] &&
+                board_[p]->team() == opposite_team(team) &&
+                threatens_king(p, team))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Chess::threatens_king(Point p, Team team) const {
+    auto moves = board_[p]->moves(p, board_);
+    for (Point move : moves) {
+        std::unique_ptr<Piece> const& move_piece = board_[move];
+        if (move_piece &&
+                dynamic_cast<Pieces::King const*>(move_piece.get()) &&
+                move_piece->team() == team)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Chess::is_in_checkmate(Team team) {
+    for (Point p : board_.points()) {
+        if (board_[p] && board_[p]->team() == team) {
             for (Point move : board_[p]->moves(p, board_)) {
-                std::unique_ptr<Piece> const& move_piece = board_[move];
-                if (move_piece &&
-                        dynamic_cast<Pieces::King const*>(move_piece.get()) &&
-                        move_piece->team() == team)
-                {
-                    return true;
+                bool in_check = false;
+                with_simulated_move(p, move, [&in_check, team](Chess const &c) {
+                    if (c.is_in_check(team)) {
+                        in_check = true;
+                    }
+                });
+                if (!in_check) {
+                    return false;
                 }
             }
         }
     }
-    return false;
+    return true;
 }

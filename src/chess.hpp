@@ -73,13 +73,20 @@ namespace chess {
         Board& board();
 
         bool is_in_check(Team team) const;
+
+        bool threatens_king(Point p, Team team) const;
+
+        bool is_in_checkmate(Team team);
     private:
         template <typename F>
         void with_simulated_move(Point from, Point onto, F func) {
+            Team prev_team = cur_team_;
+            cur_team_ = board_[from]->team();
             std::unique_ptr<Piece> taken = make_move(from, onto);
             func(const_cast<Chess const&>(*this));
             board_.move_piece(onto, from);
             board_[onto] = std::move(taken);
+            cur_team_ = prev_team;
         }
 
         Board board_;
