@@ -3,16 +3,14 @@
 This is an attempt to make the game of Chess purely in C++. My current goal is to have local multiplayer in a terminal
 application.
 
-The current goal list is:
+The current to-do list is:
 
-* Add win conditions
 * Disallow moving into check
 * Add castling
 * Add en passant
+
+Completed goals so far:
+
 * Add rendering
 * Add input
-
-Future goals include:
-
-* Networked multiplayer
-* Graphics mode
+* Add win conditions
