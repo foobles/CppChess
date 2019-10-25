@@ -69,7 +69,7 @@ int main() {
         std::string cur_team_str = team_as_string(chess_game.cur_team());
         if (chess_game.is_in_check(chess_game.cur_team())) {
             if (chess_game.is_in_checkmate(chess_game.cur_team())) {
-                std::cout << cur_team_str << "is in checkmate. Game Over!\n";
+                std::cout << cur_team_str << " is in checkmate. Game Over!\n";
                 break;
             }
             std::cout << cur_team_str << " is in check.\n";
