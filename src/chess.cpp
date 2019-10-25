@@ -64,8 +64,12 @@ std::unique_ptr<Piece> Chess::make_move(Point from, Point onto) {
     }
     std::vector<Point> allowed_points = board_[from]->moves(from, board_);
     if (std::find(allowed_points.begin(), allowed_points.end(), onto) != allowed_points.end()) {
-        std::unique_ptr<Piece> ret = std::move(board_[onto]);
-        board_[onto] = std::move(board_[from]);
+        std::unique_ptr<Piece> ret = make_move_unchecked(from, onto);
+        if (is_in_check(cur_team_)) {
+            board_[from] = std::move(board_[onto]);
+            board_[onto] = std::move(ret);
+            throw RuleException(RuleException::Type::MoveIntoCheck);
+        }
         return ret;
     } else {
         throw RuleException(RuleException::Type::IllegalMove);
@@ -146,4 +150,10 @@ bool Chess::is_in_checkmate(Team team) {
         }
     }
     return true;
+}
+
+std::unique_ptr<Piece> Chess::make_move_unchecked(Point from, Point onto) {
+    std::unique_ptr<Piece> ret = std::move(board_[onto]);
+    board_[onto] = std::move(board_[from]);
+    return ret;
 }

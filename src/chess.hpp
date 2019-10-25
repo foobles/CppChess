@@ -17,6 +17,7 @@ namespace chess {
         enum class Type {
             NoPiece,
             IllegalMove,
+            MoveIntoCheck,
             WrongTeam
         };
 
@@ -77,12 +78,14 @@ namespace chess {
         bool threatens_king(Point p, Team team) const;
 
         bool is_in_checkmate(Team team);
+
+        std::unique_ptr<Piece> make_move_unchecked(Point from, Point onto);
     private:
         template <typename F>
         void with_simulated_move(Point from, Point onto, F func) {
             Team prev_team = cur_team_;
             cur_team_ = board_[from]->team();
-            std::unique_ptr<Piece> taken = make_move(from, onto);
+            std::unique_ptr<Piece> taken = make_move_unchecked(from, onto);
             func(const_cast<Chess const&>(*this));
             board_.move_piece(onto, from);
             board_[onto] = std::move(taken);
