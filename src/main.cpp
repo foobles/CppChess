@@ -88,6 +88,9 @@ int main() {
             case chess::RuleException::Type::WrongTeam:
                 std::cout << "You can only move your own pieces.\n";
                 break;
+            case chess::RuleException::Type::MoveIntoCheck:
+                std::cout << "You cannot move into check.\n";
+                break;
             }
         }
 
