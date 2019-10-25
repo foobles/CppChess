@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <stdexcept>
 #include <cctype>
 #include <regex>
@@ -35,7 +36,6 @@ std::unique_ptr<chess::Action> get_input(Team cur_team, Chess* ch = nullptr) {
     std::smatch sm;
     std::regex rg_move(R"(^\s*([A-Ha-h][1-8])\s+to\s+([A-Ha-h][1-8])\s*$)");
     std::regex rg_pass(R"(^\s*pass\s*$)");
-    std::regex rg_get_moves(R"(^get\s+([A-Ha-h][1-8])\s*$)");
     if (std::regex_search(str, sm, rg_move)) {
         return std::make_unique<chess::action::Move>(
                 cur_team,
@@ -60,10 +60,12 @@ std::string team_as_string(Team t) {
 
 int main() {
     Chess chess_game;
-
+    std::string message;
 
     while (true) {
         chess_game.board().draw(chess_game.cur_team());
+        std::cout << message;
+        message.clear();
         std::string cur_team_str = team_as_string(chess_game.cur_team());
         if (chess_game.is_in_check(chess_game.cur_team())) {
             if (chess_game.is_in_checkmate(chess_game.cur_team())) {
@@ -76,20 +78,20 @@ int main() {
         try {
             get_input(chess_game.cur_team(), &chess_game)->handle(chess_game);
         } catch (ParseInputError const& e) {
-            std::cout << "Bad input.\n";
+            message = "Bad input.\n";
         } catch (chess::RuleException const& e) {
             switch (e.type()) {
             case chess::RuleException::Type::IllegalMove:
-                std::cout << "You aren't allowed to move that there.\n";
+                message = "You aren't allowed to move that there.\n";
                 break;
             case chess::RuleException::Type::NoPiece:
-                std::cout << "You have no piece there.\n";
+                message = "You have no piece there.\n";
                 break;
             case chess::RuleException::Type::WrongTeam:
-                std::cout << "You can only move your own pieces.\n";
+                message = "You can only move your own pieces.\n";
                 break;
             case chess::RuleException::Type::MoveIntoCheck:
-                std::cout << "You cannot move into check.\n";
+                message = "You cannot move into check.\n";
                 break;
             }
         }
