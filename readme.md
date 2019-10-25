@@ -5,12 +5,12 @@ application.
 
 The current to-do list is:
 
-* Disallow moving into check
 * Add castling
 * Add en passant
 
 Completed goals so far:
 
+* Disallow moving into check
 * Add rendering
 * Add input
 * Add win conditions
