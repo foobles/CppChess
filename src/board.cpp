@@ -73,9 +73,14 @@ void Board::draw(Team team) const {
                 std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
                 //std::cout << '|' << x << y;
             }
-            std::cout << "|\n";
+            std::cout << "| " << (height_ - y) << '\n';
         }
         draw_row_separator(width_);
+        std::cout << "    ";
+        for (int i = 0; i < width_; ++i) {
+            std::cout << static_cast<char>(i + 'A') << "  ";
+        }
+        std::cout << '\n';
         break;
     case Team::Black:
             std::cout << "    ";
@@ -92,9 +97,14 @@ void Board::draw(Team team) const {
                     std::cout << "| " << (cur_piece? cur_piece->symbol() : ' ');
                     //std::cout << '|' << x << y;
                 }
-                std::cout << "|\n";
+                std::cout << "| " << (height_ - y) << '\n';
             }
             draw_row_separator(width_);
+            std::cout << "    ";
+            for (int i = width_ - 1; i >= 0; --i) {
+                std::cout << static_cast<char>(i + 'A') << "  ";
+            }
+            std::cout << '\n';
             break;
     }
 }
